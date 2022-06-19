@@ -1,0 +1,72 @@
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    line-height: 0px;
+}
+
+#gallery .photo .seed {
+    z-index: 1;
+    position: absolute;
+    bottom: 0.7em;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+    opacity: 0%;
+    transition: opacity 200ms ease-in-out;
+}
+
+#gallery .photo:hover .seed {
+    opacity: 100%;
+}
+
+#gallery .photo {
+    position: relative;
+    display: block;
+    margin: 0.3%;
+    width: 22%;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px var(--outline);
+}
+
+#gallery .photo:hover img,
+#gallery .photo:hover canvas {
+    cursor: pointer;
+}
+
+#gallery .photo.dark .seed {
+    color: var(--background);
+}
+
+#gallery .photo.bright .seed {
+    color: var(--outline);
+}
+
+#gallery .photo.dark:hover canvas,
+#gallery .photo.dark:hover img {
+    filter: brightness(120%) saturate(90%);
+}
+
+#gallery .photo.bright:hover canvas,
+#gallery .photo.bright:hover img {
+    filter: brightness(80%) saturate(110%);
+}
+
+@media (max-width : 1200px) {
+    #gallery .photo {
+        width: 30%;
+    }
+}
+
+@media (max-width : 900px) {
+    #gallery .photo {
+        width: 40%;
+    }
+}
+
+@media (max-width : 650px) {
+    #gallery .photo {
+        width: 70%;
+    }
+}

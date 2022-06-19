@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@300&family=Outfit:wght@300&display=swap');
+
+:root {
+    --outline: #251f32;
+    --standout: #8f6fce;
+    --sans-serif: 'Outfit', system-ui, -apple-system, Roboto, 'Helvetica Neue', sans-serif;
+    --serif: 'Cormorant', 'Times New Roman', Times, serif;
+    --background: #fffcf5;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    font-family: var(--serif);
+    color: var(--outline);
+    background-color: var(--background);
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    /* height: 300%; */
+    /* background: linear-gradient(0deg, rgba(9,8,43,1) 0%, rgba(13,11,53,1) 13%, rgba(27,22,87,1) 26%, rgba(38,30,113,1) 44%, rgba(68,51,182,1) 71%, rgba(100,78,241,1) 91%); */
+    text-align: center;
+    padding: 1vh 5vw;
+    box-sizing: border-box;
+    font-size: 1.25em;
+}
+
+#app #icon {
+    width: 60vw;
+    height: 60vw;
+    max-width: 35vh;
+    max-height: 35vh;
+}
+
+h1 {
+    font-family: var(--sans-serif);
+    font-weight: 300;
+    font-size: 4em;
+}
+h3 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 2em;
+}
+
+h3 img {
+    height: 0.6em;
+}
+.sticky {
+    position: sticky;
+}
+#fixed-home-btn {
+    position: absolute;
+    display: block;
+    z-index: 5;
+    width: 100%;
+    background-color: var(--background);
+    
+    height: 6vh;
+    padding: 6vh 5vh 4vh 6vh;
+}
+br.home-spacer {
+    display: block;
+    content: "";
+    margin-top: 6em;
+}
+#fixed-home-btn img {
+    height: 100%;
+}
+#fixed-home-btn span {
+    position: relative;
+    font-size: 1.5em;
+    top: -1.5vh;
+    margin-left: 1%;
+}
+
+.photo img,
+.photo canvas {
+    width: 100%;
+    height: auto;
+    line-height: 0px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    transition: filter 200ms ease-in-out;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+hr {
+    border: none;
+    border-top: 1px var(--outline) solid;
+    opacity: 50%;
+    width: 50%;
+}
+
+span[href]:hover {
+    cursor: pointer;
+    color: var(--standout);
+}
