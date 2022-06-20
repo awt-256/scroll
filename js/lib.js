@@ -13,27 +13,58 @@ const serializeSeed = (input) => {
     }
     return hash;
 }
+const VOWELS = "aieou".split("");
+const ALPHABET = "abcdefghijklmnopqrstuvwxyz".split('')
+const CONSONANTS = ALPHABET.filter(c => !VOWELS.includes(c));
+const WHITESPACE = [' ', ''];
+const CHARS = ALPHABET.concat(WHITESPACE);
+
 const genRandomSeed = () => {
     const COUNT = 10;
-    const alphabet = "abcdefghijklmnopqrstuvwxyz".split('')
-    const chars = alphabet.concat([' ', '']);
     let out = ""
     for (let i = 1; i <= COUNT; ++i) {
-        if (i === 1 || i === COUNT) out += alphabet[~~(Math.random()*alphabet.length)];
-        else out += chars[~~(Math.random()*chars.length)];
+        if (i === 1 || i === COUNT) out += ALPHABET[~~(Math.random()*ALPHABET.length)];
+        else out += CHARS[~~(Math.random()*CHARS.length)];
     }
 
     return out;
 }
-const newRng = (seed, mul = 20056, inc = 257, mod = 12345) => {
+
+const convertSeedToWord = (seed) => {
+    const arr = seed.split('');
+    let cc = 0;
+    for (let i = 0; i < arr.length - 1; ++i) {
+        if (!VOWELS.includes(arr[i]) && !VOWELS.includes(arr[i + 1])) {
+            if (WHITESPACE.includes(arr[i+1])) arr[i] = VOWELS[CHARS.indexOf(arr[i]) % VOWELS.length]
+            else arr[i+1] = VOWELS[CHARS.indexOf(arr[i+1]) % VOWELS.length]
+        } else if (VOWELS.includes(arr[i]) && VOWELS.includes(arr[i + 1]) && VOWELS.includes(arr[i + 3])) {
+            arr[i] = CHARS[(i * VOWELS.indexOf(arr[i])) % CHARS.length]
+        }
+        if (!WHITESPACE.includes(arr[i])) cc += 1;
+        else cc = 0;
+        if (cc >= 6) {
+            arr.splice(i+1,0,' ');
+            cc = 0;
+        }
+    }
+    return arr.join('');
+}
+
+
+const newRng = (seed, mul = 0x7AA63A9, inc = 0xA73BCD, mod = 0x6AE7FF89) => {
     if (typeof seed !== "number") seed = serializeSeed(seed);
     return () => (seed = ((seed * mul + inc) % mod)) / mod
 }
 
 class Color {
+    static DENSITY = {
+        R: 0.299,
+        G: 0.587,
+        B: 0.114
+    }
     constructor(colorConfig, r, g, b) {
         this.colorConfig = colorConfig;
-        if (r == undefined) r = ~~(colorConfig.getRandom() * 0xFFFFFF);
+        if (r == undefined) r = ~~(colorConfig.getRandom() * 0xFFFFFF)
         if (g == undefined && b == undefined) {
             g = (r >> 8) & 0xFF
             b = r & 0xFF
@@ -104,7 +135,7 @@ class Stroke {
         if (dist < this.brushConfig.completitionRange) {
             this.setTargets();
         } else {
-            const t_size = this.t_size = dist ** (this.brushConfig.sizeFactor)
+            const t_size = this.t_size = (dist ** (this.brushConfig.sizeFactor))
             this.zx = lerp(this.zx, this.t_zx, 5);
             this.zy = lerp(this.zy, this.t_zy, 5);
             this.x = lerp(this.x, this.t_x, this.zx);
@@ -174,7 +205,7 @@ const scrollPainters = [async (seed, canvas) => {
     const colorConfig = globalConfig.colorConfig = { getRandom, blendRate: 1 / 1.3, contrastRate: -1 / 3 };
 
     colorConfig.theme = new Color(colorConfig);
-    colorConfig.background = new Color(colorConfig).contrast(colorConfig.theme, -1 / 1.2);
+    colorConfig.background = new Color(colorConfig)
 
     const brushCountNum = getRandom();
     const brushConfig = globalConfig.brushConfig = { contrastRatio: 0.1, brushCount: brushCountNum < 0.05 ? 3 : brushCountNum < 0.1 ? 2 : 1, strokeCount: ~~(getRandom() * 7) + 1, sizeFactor: 1 / 1.3, completitionRange: size / 40 };
@@ -182,4 +213,4 @@ const scrollPainters = [async (seed, canvas) => {
     paintScroll(globalConfig);
 
     return globalConfig;
-}]
+}];

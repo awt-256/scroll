@@ -8,13 +8,13 @@ const pushFrames = () => {
         photo.className = "photo";
         const desc = photo.appendChild(document.createElement('span'));
         desc.className = 'seed';
-        desc.innerText = 'Click to view "' + seed + '"';
+        desc.innerText = 'Click to view "' + convertSeedToWord(seed) + '"';
         const canvas = photo.appendChild(document.createElement('canvas'));
         canvas.width = canvas.height = 400;
         canvas.setAttribute('seed', seed);
         scrollPainters[V](seed, canvas).then(globalConfig => {
             const {r,g,b} = globalConfig.colorConfig.background;
-            photo.classList.add(r * 0.299 + g * 0.587 + b * 0.114 > 150 ? "bright" : "dark");
+            photo.classList.add(r * Color.DENSITY.R + g * Color.DENSITY.G + b * Color.DENSITY.B > 150 ? "bright" : "dark");
         });
     }));
 };

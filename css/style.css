@@ -108,6 +108,10 @@ hr {
     width: 50%;
 }
 
+span[href] {
+    transition: color 150ms ease-in-out;
+}
+
 span[href]:hover {
     cursor: pointer;
     color: var(--standout);
