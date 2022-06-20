@@ -30,8 +30,7 @@
     box-shadow: 0px 1px 3px var(--outline);
 }
 
-#gallery .photo:hover img,
-#gallery .photo:hover canvas {
+#gallery .photo:hover {
     cursor: pointer;
 }
 

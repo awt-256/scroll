@@ -11,7 +11,7 @@ const pushFrames = () => {
         desc.innerText = 'Click to view "' + convertSeedToWord(seed) + '"';
         const canvas = photo.appendChild(document.createElement('canvas'));
         canvas.width = canvas.height = 400;
-        canvas.setAttribute('seed', seed);
+        photo.setAttribute('seed', seed);
         scrollPainters[V](seed, canvas).then(globalConfig => {
             const {r,g,b} = globalConfig.colorConfig.background;
             photo.classList.add(r * Color.DENSITY.R + g * Color.DENSITY.G + b * Color.DENSITY.B > 150 ? "bright" : "dark");
@@ -19,8 +19,9 @@ const pushFrames = () => {
     }));
 };
 gallery.addEventListener('click', (click) => {
-    if (click.target instanceof HTMLCanvasElement) {
-        window.open(location.origin + "/view#" + V + "#" + click.target.getAttribute('seed').replace(/ /g, '-'));
+    const photo = click.path.find(e=>e.classList.contains('photo'));
+    if (photo) {
+        window.open(location.origin + "/view#" + V + "#" + photo.getAttribute('seed').replace(/ /g, '-'));
     }
 });
 for (let i = 0; i < 1; ++i) pushFrames();

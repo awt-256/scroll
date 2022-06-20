@@ -14,3 +14,6 @@ piece.style.opacity = "70%";
 // seedElem.style.opacity = "80%";
 seedElem.innerText = '"' + convertSeedToWord(seed) + '"';
 document.title = "scroll";
+piece.addEventListener('click', () => {
+    window.open(location.origin + "/view#" + V + "#" + seed.replace(/ /g, '-'));
+});

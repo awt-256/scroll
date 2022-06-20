@@ -21,6 +21,7 @@
 
 #piece:hover {
     width: 42vh;
+    cursor: pointer;
 }
 #piece:hover .seed {
     color: var(--standout);
@@ -34,7 +35,6 @@ h3[href]:hover {
     color: var(--standout);
     cursor: pointer;
 }
-
 
 #piece .seed {
     transition: color 250ms ease-in-out;
